@@ -65,7 +65,8 @@ def pdbSeq(pdb,use_atoms=False):
                         continue
 
                 atoms.append(l)
-            elif l[0:6] == "HETATM" and l[13:16] == "CA " and l[17:20] == "MSE":
+# uncommented for my use case                
+##            elif l[0:6] == "HETATM" and l[13:16] == "CA " and l[17:20] == "MSE":
 
                 # Check to see if this is a second conformation of the previous
                 # atom
@@ -137,10 +138,14 @@ def pdbSeq2Fasta(pdb,pdb_id="",chain="all",use_atoms=False):
 
     out = []
     for c in chains_to_write:
-        out.append(">%s%s_%s" % (pdb_id,c,seq_type))
+        #out.append(">%s%s_%s" % (pdb_id,c,seq_type))
 
-        # Write output in lines 80 characters long
+        # Write output with chain length and in lines 80 characters long
         seq_length = len(chain_dict[c])
+        
+        # Add length of chain sequence
+        chain_length = "chain_length:" + str(seq_length)
+        out.append(">%s%s_%s%s" % (pdb_id,c,seq_type,chain_length))
         num_lines = seq_length // 80
 
         for i in range(num_lines+1):
@@ -148,6 +153,5 @@ def pdbSeq2Fasta(pdb,pdb_id="",chain="all",use_atoms=False):
         out.append("".join([aa for aa in chain_dict[c][80*(i+1):]]))
         if out[-1] == "":
             out.pop(-1)
-
 
     return "\n".join(out)

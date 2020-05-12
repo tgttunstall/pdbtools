@@ -18,6 +18,7 @@ import sys, os
 from pdbtools.helper import cmdline
 from pdbtools.data.common import *
 from pdbtools import seq
+from Bio import SeqIO
 
 def main():
     """
@@ -53,8 +54,6 @@ def main():
         sequence = seq.pdbSeq2Fasta(pdb,pdb_id,options.chain,options.atomseq)
 
         print(sequence)
-
-
 
 if __name__ == "__main__":
     main()
