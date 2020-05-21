@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+
+# Copyright 2020, Tanushree Tunstall
+# This program is distributed under General Public License v. 3.  See the file
+# COPYING for a copy of the license.
+
+__description__ = \
+"""
+pdb_ligand.py
+
+Spits out a list of all ligands in a pdb.
+"""
+__author__ = "Michael J. Harms"
+__date__ = ""
+
+import os, shutil, sys
+from biopandas.pdb import PandasPdb
+from pdbtools.helper import cmdline
+from pdbtools import ligand_tt
+
+def main():
+    """
+    Function to call if run from command line.
+    """
+    cmdline.initializeParser(__description__,__date__)
+    cmdline.addOption(short_flag="s",
+                          long_flag="skip_boring",
+                          action="store_true",
+                          default=False,
+                    help="Ignore boring ligands (from BORING_LIGANDS list)")
+
+    file_list, options = cmdline.parseCommandLine()
+
+    for pdb_id in file_list:
+        ppdb = PandasPdb()
+        pdb_file = ppdb.read_pdb(pdb_id)  
+        ligand_out = ligand_tt.pdbLigand(pdb_file)
+
+        print(ligand_out)
+
+# If run from command line...
+if __name__ == "__main__":
+    main()
