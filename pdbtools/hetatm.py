@@ -24,7 +24,11 @@ def pdbLigand(pdb):
     """
     ligands_dict = {}
     #print('input in ligand_tt:', pdb)
-    pdb_id = pdb.code
+    #pdb_id = pdb.code # only works for files with pdb code
+    # extracts the filename part only. Although less idea, the biopandas obj,
+    # doesn't store the filename in the field '.code' as only 4-letter pdb code
+    # get stored there.
+    pdb_id = os.path.basename(pdb.pdb_path) # extracts the filename part only
     #print('dict key:', pdb.code)
     het = pdb.df['HETATM']
     het_list = list(set(het['residue_name']))

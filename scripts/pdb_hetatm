@@ -16,7 +16,7 @@ __date__ = ""
 import os, shutil, sys
 from biopandas.pdb import PandasPdb
 from pdbtools.helper import cmdline
-from pdbtools import ligand_tt
+from pdbtools import hetatm
 
 def main():
     """
@@ -34,7 +34,7 @@ def main():
     for pdb_id in file_list:
         ppdb = PandasPdb()
         pdb_file = ppdb.read_pdb(pdb_id)  
-        ligand_out = ligand_tt.pdbLigand(pdb_file)
+        ligand_out = hetatm.pdbLigand(pdb_file)
 
         print(ligand_out)
 
